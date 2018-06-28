@@ -37,7 +37,7 @@ public class ProductInfoRepositoryTest {
     @Test
      public  void createProductInfoTest() {
         ProductInfo p = new ProductInfo();
-        p.setProductId("1");
+        p.setProductId("2");
         p.setProductPrice(new BigDecimal(23.00));
         p.setProductName("玩具汽车");
         p.setProductStock(1000);
