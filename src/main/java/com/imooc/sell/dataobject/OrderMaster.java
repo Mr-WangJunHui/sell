@@ -1,6 +1,9 @@
 package com.imooc.sell.dataobject;
 
+import com.imooc.sell.enums.OrderStatusEnum;
+import com.imooc.sell.enums.PayStatusEnum;
 import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,6 +12,7 @@ import java.sql.Date;
 
 @Entity
 @Data
+@DynamicUpdate
 public class OrderMaster {
     //商品ID
     @Id
@@ -28,9 +32,9 @@ public class OrderMaster {
     private BigDecimal orderAmount;
 
     //订单状态,默认0新下单
-    private Integer orderStatus;
+    private Integer orderStatus = OrderStatusEnum.NEW.getCode();
     //支付状态，默认0未支付
-    private Integer payStatus;
+    private Integer payStatus = PayStatusEnum.UNPAY.getCode();
     //创建时间
     private Date createTime;
 
