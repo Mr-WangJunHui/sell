@@ -5,6 +5,7 @@ import com.imooc.sell.dataobject.ProductInfo;
 import com.imooc.sell.repository.ProductInfoRepository;
 import com.imooc.sell.service.CategoryService;
 import com.imooc.sell.service.InfoService;
+import com.imooc.sell.utlis.ResultVOUtils;
 import com.imooc.sell.vo.ProductInfoVo;
 import com.imooc.sell.vo.ProductVo;
 import com.imooc.sell.vo.ResultVo;
@@ -57,11 +58,6 @@ public class CategoryController {
             productVo.setProductInfoVoList(productInfoVos);
             productVoLists.add(productVo);
         }
-
-        ResultVo<List<ProductVo>> resultVo = new ResultVo<List<ProductVo>>();
-        resultVo.setCode(0);
-        resultVo.setMsg("交易成功");
-        resultVo.setData(productVoLists);
-        return resultVo;
+        return ResultVOUtils.success(productVoLists);
     }
 }
