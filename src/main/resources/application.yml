@@ -1,0 +1,13 @@
+server:
+  context-path: /sell
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    url: jdbc:mysql://47.98.220.106:3306/sell?CharecterEncoding=utf-8
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show-ssl: true
+

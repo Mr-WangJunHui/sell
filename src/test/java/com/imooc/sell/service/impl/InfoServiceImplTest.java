@@ -21,7 +21,7 @@ public class InfoServiceImplTest {
 
     @Test
     public void findOneProductInfoServiceTest() {
-        ProductInfo p = infoServiceimpl.findOneProductInfoService("1");
+        ProductInfo p = infoServiceimpl.findProductInfoByProductIdService("1");
         Assert.assertNotNull(p);
         System.out.println(p);
     }
@@ -38,25 +38,25 @@ public class InfoServiceImplTest {
         p.setCategoryType(2);
         p.setCreateTime(new Date(System.currentTimeMillis()));
         p.setUpdateTime(new Date(System.currentTimeMillis()));
-        ProductInfo productInfo = infoServiceimpl.productInfoSaveService(p);
+        ProductInfo productInfo = infoServiceimpl.createProductInfoService(p);
         Assert.assertNotNull(productInfo);
         System.out.println(productInfo);
     }
 
     @Test
     public void productInfoDeleteServiceTest() {
-        infoServiceimpl.productInfoDeleteService("3");
+        infoServiceimpl.deleteProductInfoService("3");
     }
 
     @Test
     public void productInfoFindAllTest() {
-        List<ProductInfo> lists = infoServiceimpl.productInfoFindAll();
+        List<ProductInfo> lists = infoServiceimpl.findAllProductInfo();
         System.out.println(lists);
     }
 
     @Test
     public void productInfoByStatusTest() {
-        List<ProductInfo> lists =infoServiceimpl.productInfoByStatus(1);
+        List<ProductInfo> lists =infoServiceimpl.findByProductStatusService(1);
         System.out.println(lists);
     }
 }
