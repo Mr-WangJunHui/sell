@@ -14,7 +14,7 @@ import com.imooc.sell.repository.OrderMasterRepository;
 import com.imooc.sell.service.InfoService;
 import com.imooc.sell.service.OrderService;
 import com.imooc.sell.utlis.KeyUtils;
-import com.imooc.sell.utlis.OrderMaster2OrderDTOConvert;
+import com.imooc.sell.convert.OrderMaster2OrderDTOConvert;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -54,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
         List<StockDTO> stockDTOList = new ArrayList<StockDTO>();
         //1.查询商品（数量，价格）
         for(OrderDetail orderDetail:orderDTO.getOrderDetailList()){
-              ProductInfo productInfo = infoService.findOneProductInfoService(orderDetail.getProductId());
+              ProductInfo productInfo = infoService.findProductInfoByProductIdService(orderDetail.getProductId());
               if(productInfo == null){
                   throw new SellException(ResultEnum.PRODUCT_NOT_EXSIST);
               }
@@ -65,6 +65,7 @@ public class OrderServiceImpl implements OrderService {
                           .add(orderAmount);
 
             //订单详情入库
+
             orderDetail.setDetailId(KeyUtils.genUniqueKey());
               orderDetail.setOrderId(orderId);
             BeanUtils.copyProperties(productInfo,orderDetail);
@@ -78,9 +79,12 @@ public class OrderServiceImpl implements OrderService {
 
         //3.写入订单数据库（orderMaster和orderDetail）
         OrderMaster orderMaster = new OrderMaster();
+        orderDTO.setOrderId(orderId
 
+
+        );
         BeanUtils.copyProperties(orderDTO,orderMaster);
-        orderMaster.setOrderId(orderId);
+
         orderMaster.setOrderAmount(orderAmount);
         orderMaster.setOrderStatus(OrderStatusEnum.NEW.getCode());
         orderMaster.setPayStatus(PayStatusEnum.UNPAY.getCode());

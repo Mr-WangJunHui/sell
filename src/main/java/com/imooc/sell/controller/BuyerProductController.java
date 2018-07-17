@@ -11,6 +11,7 @@ import com.imooc.sell.vo.ProductVo;
 import com.imooc.sell.vo.ResultVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,17 +23,17 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/buyer/product")
-public class CategoryController {
+public class BuyerProductController {
     @Autowired
     private InfoService infoService;
     @Autowired
     private CategoryService categoryService;
 
-    @RequestMapping("/list")
+    @GetMapping("/list")
     public ResultVo showCategoryController(){
 
         //1.查询所有的上架商品
-        List<ProductInfo> productInfoList = infoService.productInfoFindAll();
+        List<ProductInfo> productInfoList = infoService.findAllProductInfo();
 
         //2.查询类目(一次性查出)
         List<Integer> cateTypelist = new ArrayList<Integer>();

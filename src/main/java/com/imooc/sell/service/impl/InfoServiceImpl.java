@@ -1,6 +1,9 @@
 package com.imooc.sell.service.impl;
 
 import com.imooc.sell.dataobject.ProductInfo;
+import com.imooc.sell.dto.StockDTO;
+import com.imooc.sell.enums.ResultEnum;
+import com.imooc.sell.exception.SellException;
 import com.imooc.sell.repository.ProductInfoRepository;
 import com.imooc.sell.service.InfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +43,30 @@ public class InfoServiceImpl implements InfoService {
     @Override
     public List<ProductInfo> findAllProductInfo() {
         return productInfoRepository.findAll();
+    }
+
+    @Override
+    public void decreateStock(List<StockDTO> stockDTOList) {
+        if(stockDTOList == null && stockDTOList.size()>0){
+            //商品不存在
+            throw new SellException(ResultEnum.PRODUCT_NOT_EXSIST);
+        }
+        Integer stock = 0;
+        for(StockDTO stockDTO:stockDTOList){
+           ProductInfo productInfo = productInfoRepository.findOne(stockDTO.getProductId());
+           stock = productInfo.getProductStock()-stockDTO.getProductQuantity();
+           if(stock<0){
+               //商品库存不足
+               throw new SellException(ResultEnum.PRODUCT_STOCK_ERROR);
+           }
+           //更新库存
+           productInfo.setProductStock(stock);
+
+        }
+    }
+
+    @Override
+    public void increateStock(String productId) {
+
     }
 }
