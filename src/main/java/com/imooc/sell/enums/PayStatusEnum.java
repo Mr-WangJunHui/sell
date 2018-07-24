@@ -3,7 +3,7 @@ package com.imooc.sell.enums;
 import lombok.Getter;
 
 @Getter
-public enum PayStatusEnum {
+public enum PayStatusEnum implements CodeEnum{
     PAY(1,"已付款"),
     UNPAY(0,"未付款");
      private Integer code;
@@ -13,4 +13,5 @@ public enum PayStatusEnum {
            this.code = code;
            this.msg = msg;
     }
+
 }

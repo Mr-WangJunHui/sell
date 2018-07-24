@@ -4,6 +4,7 @@ import com.imooc.sell.dataobject.OrderDetail;
 import com.imooc.sell.dto.OrderDTO;
 import com.imooc.sell.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.validation.constraints.AssertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,5 +90,19 @@ public class OrderServiceImplTest {
         OrderDTO orderDTO = orderService.findOne("1530404713735597307");
         OrderDTO orderDTO1 = orderService.paid(orderDTO);
         System.out.println(orderDTO1);
+    }
+
+
+    /**
+     * 卖家端查询订单列表
+     */
+    @Test
+    public void findListall(){
+        PageRequest pageRequest = new PageRequest(1,2);
+
+        Page<OrderDTO> orderDTOS = orderService.findList(pageRequest);
+
+        Assert.assertTrue("查询订单列表失败",orderDTOS.getTotalElements()>0);
+        System.out.println("订单列表详情"+orderDTOS.toString()+"订单条数"+orderDTOS.getTotalElements());
     }
 }

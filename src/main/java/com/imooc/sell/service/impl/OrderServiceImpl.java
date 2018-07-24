@@ -40,7 +40,11 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderMasterRepository orderMasterRepository;
 
-
+    /**
+     * 创建订单
+     * @param orderDTO
+     * @return
+     */
 
     @Transactional
     public OrderDTO create(OrderDTO orderDTO) {
@@ -132,6 +136,23 @@ public class OrderServiceImpl implements OrderService {
         return orderDTOS;
     }
 
+    /**
+     * 查询所有的订单
+     * @param pageable
+     * @return
+     */
+    public Page<OrderDTO> findList(Pageable pageable) {
+        Page<OrderMaster> orderMasters = orderMasterRepository.findAll(pageable);
+        List<OrderDTO> orderMasterList = OrderMaster2OrderDTOConvert.convertList(orderMasters.getContent());
+        return new PageImpl<>(orderMasterList,pageable,orderMasters.getTotalElements());
+    }
+
+
+    /**
+     * 取消订单
+     * @param orderDTO
+     * @return
+     */
     @Transactional
     public OrderDTO cancle(OrderDTO orderDTO) {
        OrderMaster orderMaster =  orderMasterRepository.findOne(orderDTO.getOrderId());
@@ -146,12 +167,18 @@ public class OrderServiceImpl implements OrderService {
           //发起退款
       }
        if(orderMaster.getOrderStatus() != OrderStatusEnum.CANCEL.getCode()){
-           orderMaster.setPayStatus(OrderStatusEnum.CANCEL.getCode());
+           orderMaster.setOrderStatus(OrderStatusEnum.CANCEL.getCode());
        }
 
         return orderDTO;
     }
 
+
+    /**
+     * 完结订单
+     * @param orderDTO
+     * @return
+     */
     @Override
     @Transactional
     public OrderDTO finished(OrderDTO orderDTO) {
@@ -170,6 +197,12 @@ public class OrderServiceImpl implements OrderService {
         return OrderMaster2OrderDTOConvert.convert(orderMaster1);
     }
 
+
+    /**
+     * 支付订单
+     * @param orderDTO
+     * @return
+     */
     @Override
     @Transactional
     public OrderDTO paid(OrderDTO orderDTO) {

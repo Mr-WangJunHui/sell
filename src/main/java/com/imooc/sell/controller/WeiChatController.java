@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URLEncoder;
+
 
 @Controller
 @RequestMapping("/wechat")
@@ -28,8 +30,8 @@ public class WeiChatController {
     public String  authorize(@RequestParam("returnUrl") String returnUrl){
         //配置
         //调用方法
-        String url = "http://sunshare.320.io:21863/sell/wechat/userInfo";
-        String result= wxMpService.oauth2buildAuthorizationUrl(url,WxConsts.OAuth2Scope.SNSAPI_BASE,"");
+        String url = "http://2142xp8920.iask.in:21053/sell/wechat/userInfo";
+        String result= wxMpService.oauth2buildAuthorizationUrl(url,WxConsts.OAuth2Scope.SNSAPI_BASE,URLEncoder.encode(returnUrl));
         log.info("测试网页收取获取code",result);
 
         return "redirect:"+result;

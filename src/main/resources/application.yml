@@ -1,6 +1,6 @@
 server:
   context-path: /sell
-  port: 8080
+  port: 8081
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
